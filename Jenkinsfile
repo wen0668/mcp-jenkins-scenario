@@ -6,11 +6,11 @@ pipeline {
 
     environment {
         GIT_REPO   = 'https://github.com/wen0668/mcp-jenkins-scenario.git'
-        GIT_BRANCH = 'main'
+        GIT_BRANCH = 'feature-20260615'
         // Jenkins 连接配置（在 script 块中读取 credentials）
         JENKINS_URL       = 'http://192.168.0.4:8080'
         JENKINS_USERNAME  = 'mcp-dev'
-        JENKINS_API_TOKEN = ''
+        JENKINS_API_TOKEN = '114144a252560bf1709ca15bf4a53ace19'
     }
 
     parameters {
