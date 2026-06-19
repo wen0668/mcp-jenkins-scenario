@@ -7,14 +7,14 @@ pipeline {
     environment {
         GIT_REPO   = 'https://github.com/wen0668/mcp-jenkins-scenario.git'
         GIT_BRANCH = 'feature-20260615'
-        // Jenkins 连接配置（在 script 块中读取 credentials）
-        JENKINS_URL       = 'http://192.168.0.4:8080'
-        JENKINS_USERNAME  = 'mcp-dev'
-        JENKINS_API_TOKEN = '114144a252560bf1709ca15bf4a53ace19'
+        // Jenkins 连接配置
+        JENKINS_URL       = credentials('jenkins-url') ?: 'http://192.168.0.4:8080'
+        JENKINS_USERNAME  = credentials('jenkins-username') ?: 'mcp-dev'
+        JENKINS_API_TOKEN = credentials('jenkins-api-token') ?: '114144a252560bf1709ca15bf4a53ace19'
     }
 
     parameters {
-        string(name: 'GIT_BRANCH', defaultValue: 'main', description: 'Git 分支')
+        string(name: 'GIT_BRANCH', defaultValue: 'feature-20260615', description: 'Git 分支')
         string(name: 'DEPLOY_ENV', defaultValue: 'staging', description: '部署环境 (staging/production)')
         booleanParam(name: 'RUN_TESTS', defaultValue: true, description: '是否运行测试')
     }
