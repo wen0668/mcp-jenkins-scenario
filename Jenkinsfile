@@ -7,10 +7,10 @@ pipeline {
     environment {
         GIT_REPO   = 'https://github.com/wen0668/mcp-jenkins-scenario.git'
         GIT_BRANCH = 'main'
-        // Jenkins 连接配置
-        JENKINS_URL       = credentials('jenkins-url') ?: 'http://192.168.0.4:8080'
-        JENKINS_USERNAME  = credentials('jenkins-username') ?: 'mcp-dev'
-        JENKINS_API_TOKEN = credentials('jenkins-api-token') ?: ''
+        // Jenkins 连接配置（在 script 块中读取 credentials）
+        JENKINS_URL       = 'http://192.168.0.4:8080'
+        JENKINS_USERNAME  = 'mcp-dev'
+        JENKINS_API_TOKEN = ''
     }
 
     parameters {
@@ -61,6 +61,18 @@ pipeline {
             }
         }
 
+        stage("Verify") {
+            steps {
+                script {
+                    sh """
+                        . venv/bin/activate
+                        python3 -c "import jenkins; print(\"jenkins OK\")"
+                        python3 -c "import mcp; print(\"mcp OK\")"
+                    """
+                }
+            }
+        }
+        
         stage('Build Docker Image') {
             steps {
                 script {
